@@ -1,0 +1,72 @@
+# Raw genome data (too large - referenced via accessions in TableS8)
+data/raw/
+data/processed/annotation/
+data/processed/genomes/
+
+# Large intermediate files
+*.fna
+*.fasta
+*.fa
+*.fastq
+*.gz
+*.bam
+*.sam
+*.rds
+*.RDS
+
+# Metadata large files
+data/processed/metadata/ncbi_catalog_raw.jsonl
+data/processed/metadata/ncbi_biosample_metadata.csv
+data/processed/metadata/ncbi_candidates.csv
+data/processed/metadata/genomes_pass_qc.csv
+data/processed/metadata/bvbrc_metadata_full.csv
+data/processed/metadata/pubmlst_metadata.csv
+data/processed/metadata/bvbrc_catalog.csv
+
+# TIFF figures (too large - PNG versions included)
+*.tiff
+*.tif
+
+# Temporary and system files
+*.log
+.DS_Store
+__pycache__/
+*.pyc
+*.Rhistory
+*.RData
+Rplots.pdf
+
+# Conda environments (defined in envs/ folder)
+*.conda
+
+# Notebooks placeholders (empty)
+notebooks/
+
+# Old scripts log
+scripts/r/figures_v3.log
+
+# Internal prompts and Claude settings
+.claude/
+*.md
+!README.md
+
+# Internal documents and drafts
+docs/
+
+# Borrador figures
+results/figures/supplementary/BORRADOR/
+
+# Internal metadata files
+data/processed/metadata/genomes_pass_qc_validated.csv
+data/processed/metadata/bvbrc_download_summary.json
+data/processed/metadata/download_summary_global.json
+data/processed/metadata/ncbi_download_summary.json
+
+# Intermediate result tables (final versions in results/supplementary/tables_submission/)
+results/tables/
+results/networks/
+results/supplementary/geo_prevalence_by_country.csv
+results/supplementary/geo_whitelist_by_country.csv
+
+# Include manuscript folder
+!manuscript/

@@ -1,0 +1,19 @@
+name: abaum_network
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - networkx
+  - python-igraph
+  - scipy
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - powerlaw
+  - scikit-learn
+  - statsmodels
+  - jupyter
+  - ipykernel
+  - tqdm

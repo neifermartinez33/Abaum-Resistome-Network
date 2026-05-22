@@ -1,0 +1,22 @@
+name: abaum_r
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-base=4.3
+  - r-igraph
+  - r-ggplot2
+  - r-ggraph
+  - r-dplyr
+  - r-tidyr
+  - r-corrplot
+  - r-pheatmap
+  - r-vegan
+  - r-ellipse
+  - r-visnetwork
+  - r-bnlearn
+  - r-grain
+  - r-gRbase
+  - r-irkernel
+  - jupyter

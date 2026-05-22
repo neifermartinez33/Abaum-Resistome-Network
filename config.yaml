@@ -1,0 +1,53 @@
+annotation:
+  consensus_min_tools: 2
+  min_coverage: 80.0
+  min_identity: 90.0
+communities:
+  louvain_resolution: 1.0
+  min_community_size: 5
+network:
+  conet_min_methods: 2
+  jaccard_threshold: 0.3
+  min_cooccurrence_pct: 5.0
+  min_cooccurrence_pct_strict: 10.0
+  pvalue_threshold: 0.01
+  spieceasi_method: mb
+  spieceasi_nlambda: 20
+  spieceasi_stars_thresh: 0.05
+one_health:
+  compartments:
+  - clinical
+  - animal
+  - environmental
+  - hospital_environment
+paths:
+  annotation_amr: annotation/amrfinderplus
+  annotation_cons: annotation/consensus
+  annotation_res: annotation/resfinder
+  annotation_rgi: annotation/card_rgi
+  binary_matrix: data/matrices/binary_matrix
+  co_occurrence: data/matrices/co_occurrence
+  genomes_qc: data/processed/genomes_qc
+  metadata: data/processed/metadata
+  raw_ncbi: /media/miguel/MEMORY_333/Abaum_Resistome_Network/data/raw/ncbi
+  raw_patric: /media/miguel/MEMORY_333/Abaum_Resistome_Network/data/raw/patric
+  raw_pubmlst: /media/miguel/MEMORY_333/Abaum_Resistome_Network/data/raw/pubmlst
+  results_figures: results/figures
+  results_networks: results/networks
+  results_suppl: results/supplementary
+  results_tables: results/tables
+project:
+  name: Abaum_Resistome_Network
+  root: .
+qc:
+  ani_threshold: 95.0
+  completeness_min: 95.0
+  contamination_max: 5.0
+  reference_genome: GCF_000012345
+temporal:
+  min_genomes_per_year: 50
+  pvalue_threshold: 0.05
+  year_end: 2025
+  year_start: 2017
+topology:
+  hub_percentile: 95

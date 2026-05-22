@@ -1,0 +1,13 @@
+name: abaum_annotation
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.10
+  - rgi
+  - ncbi-amrfinderplus
+  - pandas
+  - numpy
+  - biopython
+  - tqdm

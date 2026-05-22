@@ -1,0 +1,10 @@
+Gene,Resistance_class,Community,Degree,Betweenness,Closeness,Eigenvector,Clustering_coeff,Hub_type
+qacedelta,Disinfectant (QAC),C3 (MDR Core),11,0.0321,0.9249,0.9199,0.4909,Both
+tet(b),Tetracycline,C3 (MDR Core),11,0.0333,0.9170,0.8749,0.4364,Both
+aac(6'),Aminoglycoside,C2 (Aminoglycoside/PBP3),10,0.0385,0.8401,0.9142,0.4444,Both
+adec,Efflux pump (AdeABC),C3 (MDR Core),10,0.0269,0.8854,0.8939,0.4889,Connectivity
+blatem,Beta-lactam (TEM),C1 (Beta-lactam/Aminoglycoside),10,0.0692,0.8819,0.8174,0.3333,Both
+dfra,Trimethoprim,C3 (MDR Core),10,0.0026,0.6719,0.9948,0.3111,Connectivity
+arma,Aminoglycoside (16S methylase),C5 (Macrolide),9,0.1077,0.9225,0.5034,0.3333,Both
+ftsi,Beta-lactam (PBP3),C2 (Aminoglycoside/PBP3),8,0.0654,0.9296,0.6057,0.2143,Both
+blaoxa_23like,Carbapenem (OXA-23),C4 (Quinolone/OXA),7,0.0410,0.8441,0.3006,0.1905,Betweenness

@@ -1,0 +1,14 @@
+name: abaum_qc
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.11
+  - checkm-genome=1.2.2
+  - pyani
+  - biopython
+  - pandas
+  - requests
+  - tqdm
+  - ncbi-datasets-cli
