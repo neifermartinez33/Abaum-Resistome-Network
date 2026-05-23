@@ -1,0 +1,4 @@
+"Algorithm","Graph_type","Modularity_Q","N_communities","NMI_vs_Louvain","Seed","N_nodes","N_edges"
+"Louvain","Weighted (Jaccard/Bootstrap)",0.2819,19,1,456,41,82
+"Walktrap","Weighted (Jaccard/Bootstrap)",0.2507,20,0.8943,456,41,82
+"Infomap","Weighted (Jaccard/Bootstrap)",0.0299,16,0.7837,456,41,82
