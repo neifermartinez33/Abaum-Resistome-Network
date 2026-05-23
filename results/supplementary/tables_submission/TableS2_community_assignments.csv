@@ -2,7 +2,7 @@ Gene,Resistance_class,Community_label,Community_Louvain,Degree,Betweenness,Is_hu
 blatem,Beta-lactam (TEM),C1 (Beta-lactam/Aminoglycoside),1,10,0.0692,1,0
 aph(3'),Aminoglycoside,C1 (Beta-lactam/Aminoglycoside),1,6,0.0128,0,0
 aac(3),Aminoglycoside,C1 (Beta-lactam/Aminoglycoside),1,5,0.0256,0,0
-blandm,Carbapenem (MBL),C1 (Beta-lactam/Aminoglycoside),1,3,0.0000,0,0
+blandm,Carbapenem (MBL),C1 (Beta-lactam/Aminoglycoside),1,3,0.0,0,0
 blaoxa_24like,Carbapenem (OXA-24),C1 (Beta-lactam/Aminoglycoside),1,3,0.0051,0,0
 blaoxa_235like,Carbapenem (OXA-235),C1 (Beta-lactam/Aminoglycoside),1,2,0.0013,0,0
 aac(6'),Aminoglycoside,C2 (Aminoglycoside/PBP3),2,10,0.0385,1,0
@@ -12,31 +12,31 @@ qacedelta,Disinfectant (QAC),C3 (MDR Core),3,11,0.0321,1,0
 tet(b),Tetracycline,C3 (MDR Core),3,11,0.0333,1,0
 adec,Efflux pump (AdeABC),C3 (MDR Core),3,10,0.0269,1,0
 dfra,Trimethoprim,C3 (MDR Core),3,10,0.0026,1,0
-ant(2''),Aminoglycoside,C3 (MDR Core),3,9,0.0000,0,0
+ant(2''),Aminoglycoside,C3 (MDR Core),3,9,0.0,0,0
 aada,Aminoglycoside,C3 (MDR Core),3,8,0.0141,0,0
 aph(6),Aminoglycoside,C3 (MDR Core),3,5,0.0026,0,0
-aph(3''),Aminoglycoside,C3 (MDR Core),3,4,0.0000,0,0
-catb,Phenicol,C3 (MDR Core),3,3,0.0000,0,0
-blaoxa_23like,Carbapenem (OXA-23),C4 (Quinolone/OXA),4,7,0.0410,1,0
+aph(3''),Aminoglycoside,C3 (MDR Core),3,4,0.0,0,0
+catb,Phenicol,C3 (MDR Core),3,3,0.0,0,0
+blaoxa_23like,Carbapenem (OXA-23),C4 (Quinolone/OXA),4,7,0.041,1,0
 parc,Quinolone (QRDR),C4 (Quinolone/OXA),4,7,0.0333,0,0
 sul,Sulfonamide,C4 (Quinolone/OXA),4,7,0.0346,0,0
 gyra,Quinolone (QRDR),C4 (Quinolone/OXA),4,4,0.0051,0,0
-abaf,Fosfomycin,C4 (Quinolone/OXA),4,2,0.0000,0,0
-blaoxa_58like,Carbapenem (OXA-58),C4 (Quinolone/OXA),4,2,0.0000,0,0
+abaf,Fosfomycin,C4 (Quinolone/OXA),4,2,0.0,0,0
+blaoxa_58like,Carbapenem (OXA-58),C4 (Quinolone/OXA),4,2,0.0,0,0
 arma,Aminoglycoside (16S methylase),C5 (Macrolide),5,9,0.1077,1,0
 msr(e),Macrolide,C5 (Macrolide),5,2,0.0321,0,0
-mph(e),Macrolide,C5 (Macrolide),5,1,0.0000,0,0
-arr,Rifampicin,,6,0,0.0000,0,1
-arr-3,Rifampicin,,7,0,0.0000,0,1
-blaimp,Carbapenem,,8,0,0.0000,0,1
-blakpc,Carbapenem,,9,0,0.0000,0,1
-blaoxa_143like,Carbapenem (OXA-143),,10,0,0.0000,0,1
-blavim,Carbapenem (MBL),,11,0,0.0000,0,1
-mcr-4.3,Colistin,,12,0,0.0000,0,1
-mcr-4.7,Colistin,,13,0,0.0000,0,1
-merr,Metal resistance,,14,0,0.0000,0,1
-mert,Metal resistance,,15,0,0.0000,0,1
-pmrb,Colistin (pmrB),,16,0,0.0000,0,1
-rpob,Rifampicin,,17,0,0.0000,0,1
-tet(x3),Tetracycline (Tet-X3),,18,0,0.0000,0,1
-tet(x5),Tetracycline (Tet-X5),,19,0,0.0000,0,1
+mph(e),Macrolide,C5 (Macrolide),5,1,0.0,0,0
+arr,Rifampicin,Isolated (WHO priority gene),6,0,0.0,0,1
+arr-3,Rifampicin,Isolated (WHO priority gene),7,0,0.0,0,1
+blaimp,Carbapenem,Isolated (WHO priority gene),8,0,0.0,0,1
+blakpc,Carbapenem,Isolated (WHO priority gene),9,0,0.0,0,1
+blaoxa_143like,Carbapenem (OXA-143),Isolated (WHO priority gene),10,0,0.0,0,1
+blavim,Carbapenem (MBL),Isolated (WHO priority gene),11,0,0.0,0,1
+mcr-4.3,Colistin,Isolated (WHO priority gene),12,0,0.0,0,1
+mcr-4.7,Colistin,Isolated (WHO priority gene),13,0,0.0,0,1
+merr,Metal resistance,Isolated (WHO priority gene),14,0,0.0,0,1
+mert,Metal resistance,Isolated (WHO priority gene),15,0,0.0,0,1
+pmrb,Colistin (pmrB),Isolated (WHO priority gene),16,0,0.0,0,1
+rpob,Rifampicin,Isolated (WHO priority gene),17,0,0.0,0,1
+tet(x3),Tetracycline (Tet-X3),Isolated (WHO priority gene),18,0,0.0,0,1
+tet(x5),Tetracycline (Tet-X5),Isolated (WHO priority gene),19,0,0.0,0,1
