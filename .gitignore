@@ -70,3 +70,7 @@ results/supplementary/geo_whitelist_by_country.csv
 
 # Include manuscript folder
 !manuscript/
+
+# Intermediate supplementary files (represented by TableS6 and TableS7)
+results/supplementary/geo_prevalence_by_country.csv
+results/supplementary/geo_whitelist_by_country.csv
