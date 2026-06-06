@@ -100,6 +100,6 @@ final <- (p1 / p2 / p3 / p4) +
   theme(plot.background = element_rect(fill = "white", color = NA))
 
 out_path <- file.path(out_dir, "FigS2_temporal_network_topology.png")
-ggsave(out_path, final, width = 11, height = 13, dpi = 300, bg = "white")
+ggsave(out_path, final, width = 11, height = 13, dpi = 600, bg = "white")
 cat("OK: FigS2 saved at:", out_path, "\n")
 EOF

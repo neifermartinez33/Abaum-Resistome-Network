@@ -11,7 +11,7 @@ font_add("TeX Gyre Pagella",
          italic     = "/home/miguel/.fonts/texgyrepagella-italic.otf",
          bolditalic = "/home/miguel/.fonts/texgyrepagella-bolditalic.otf")
 showtext_auto()
-showtext_opts(dpi = 300)
+showtext_opts(dpi = 600)
 FONT <- "TeX Gyre Pagella"
 
 base    <- "/home/miguel/Abaum_Resistome_Network"
@@ -227,8 +227,8 @@ p <- ggplot(cells, aes(x = col_id, y = region_f)) +
 # EXPORT
 png_path  <- file.path(out_dir, "Fig4_geo_regional_burden.png")
 tiff_path <- file.path(out_dir, "Fig4_geo_regional_burden.tiff")
-ggsave(png_path,  p, width = 14, height = 8.5, dpi = 300, bg = "white")
-ggsave(tiff_path, p, width = 14, height = 8.5, dpi = 300, bg = "white",
+ggsave(png_path,  p, width = 14, height = 8.5, dpi = 600, bg = "white")
+ggsave(tiff_path, p, width = 14, height = 8.5, dpi = 600, bg = "white",
        device = "tiff", compression = "lzw")
 cat("\u2713 PNG :", png_path,  "\n")
 cat("\u2713 TIFF:", tiff_path, "\n")

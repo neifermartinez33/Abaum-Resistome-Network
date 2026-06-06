@@ -11,7 +11,7 @@ font_add("TeX Gyre Pagella",
          italic     = "/home/miguel/.fonts/texgyrepagella-italic.otf",
          bolditalic = "/home/miguel/.fonts/texgyrepagella-bolditalic.otf")
 showtext_auto()
-showtext_opts(dpi = 300)
+showtext_opts(dpi = 600)
 FONT <- "TeX Gyre Pagella"
 
 # PATHS
@@ -66,7 +66,7 @@ p_s4 <- ggplot(top30, aes(x = mean_args, y = country_f,
   geom_text(
     aes(label = sprintf("%.2f", mean_args)),
     hjust = -0.12, size = 6.2, family = FONT,
-    fontface = "bold", color = "#222222"
+    fontface = "plain", color = "#222222"
   ) +
 
   # Mean line for the 30 countries shown
@@ -96,7 +96,7 @@ p_s4 <- ggplot(top30, aes(x = mean_args, y = country_f,
     panel.grid.major.x = element_line(color = "#EEEEEE", linewidth = 0.35),
     panel.grid.minor   = element_blank(),
     axis.text.y        = element_text(size = 19.0, family = FONT, color = "#111111",
-                                      face = "bold"),
+                                      face = "plain"),
     axis.text.x        = element_text(size = 18.0, family = FONT, color = "#333333"),
     axis.title.x       = element_text(size = 19.0, family = FONT, color = "#333333",
                                       margin = margin(t = 6)),
@@ -109,10 +109,10 @@ p_s4 <- ggplot(top30, aes(x = mean_args, y = country_f,
   )
 
 # EXPORT
-png_s4  <- file.path(out_dir, "FigS4_geo_arg_burden_countries.png")
-tiff_s4 <- file.path(out_dir, "FigS4_geo_arg_burden_countries.tiff")
-ggsave(png_s4,  p_s4, width = 12, height = 11, dpi = 300, bg = "white")
-ggsave(tiff_s4, p_s4, width = 12, height = 11, dpi = 300, bg = "white",
+png_s4  <- file.path(out_dir, "FigS3_geo_arg_burden_countries.png")
+tiff_s4 <- file.path(out_dir, "FigS3_geo_arg_burden_countries.tiff")
+ggsave(png_s4,  p_s4, width = 12, height = 11, dpi = 600, bg = "white")
+ggsave(tiff_s4, p_s4, width = 12, height = 11, dpi = 600, bg = "white",
        device = "tiff", compression = "lzw")
 cat("OK: FigS4 PNG :", png_s4,  "\n")
 cat("OK: FigS4 TIFF:", tiff_s4, "\n")

@@ -12,7 +12,7 @@ font_add("TeX Gyre Pagella",
          italic     = "/home/miguel/.fonts/texgyrepagella-italic.otf",
          bolditalic = "/home/miguel/.fonts/texgyrepagella-bolditalic.otf")
 showtext_auto()
-showtext_opts(dpi = 300)
+showtext_opts(dpi = 600)
 FONT <- "TeX Gyre Pagella"
 
 base    <- "/home/miguel/Abaum_Resistome_Network"
@@ -97,10 +97,11 @@ p_heat <- ggplot(long, aes(x = year, y = metric)) +
     )
   ) +
 
-  # Raw value labels inside tiles
+  # Raw value labels inside tiles — rotated 90° to prevent overlap across 22 years
   geom_text(
     aes(label = raw_lab, color = txt_col),
-    size     = 6.2, fontface = "bold", family = FONT
+    size     = 5.8, fontface = "bold", family = FONT,
+    angle    = 90
   ) +
   scale_color_identity() +
 
@@ -113,7 +114,7 @@ p_heat <- ggplot(long, aes(x = year, y = metric)) +
   annotate("text",
            x = 2003, y = 3.62,
            label = "Baseline",
-           size = 5.5, hjust = 0.5, family = FONT,
+           size = 5.8, hjust = 0.5, family = FONT,
            color = "#555555", fontface = "italic") +
 
   scale_x_continuous(
@@ -151,11 +152,13 @@ p_bar <- ggplot(topo, aes(x = year, y = n_genomes)) +
     fill = "#888888", alpha = 0.75, width = 0.82
   ) +
 
-  # n labels above bars
+  # n labels above bars — rotated 90° to prevent crowding across 22 years
   geom_text(
     aes(label = format(n_genomes, big.mark = ",")),
-    vjust  = -0.4, size = 3.2,
-    family = FONT, color = "#555555", fontface = "plain", size = 5.0
+    vjust  = 0.4,
+    hjust  = -0.1,
+    angle  = 90,
+    family = FONT, color = "#555555", fontface = "plain", size = 5.8
   ) +
 
   scale_x_continuous(
@@ -164,7 +167,7 @@ p_bar <- ggplot(topo, aes(x = year, y = n_genomes)) +
   ) +
   scale_y_continuous(
     labels = comma_format(),
-    expand = expansion(mult = c(0, 0.20))
+    expand = expansion(mult = c(0, 0.38))
   ) +
 
   labs(x = "Collection year", y = "Genomes (n)") +
@@ -196,10 +199,10 @@ final <- (p_heat / p_bar) +
   theme(plot.background = element_rect(fill = "white", color = NA))
 
 # EXPORT
-png_path  <- file.path(out_dir, "FigS2_temporal_network_topology.png")
-tiff_path <- file.path(out_dir, "FigS2_temporal_network_topology.tiff")
-ggsave(png_path,  final, width = 14, height = 7, dpi = 300, bg = "white")
-ggsave(tiff_path, final, width = 14, height = 7, dpi = 300, bg = "white",
+png_path  <- file.path(out_dir, "FigS1_temporal_network_topology.png")
+tiff_path <- file.path(out_dir, "FigS1_temporal_network_topology.tiff")
+ggsave(png_path,  final, width = 14, height = 8, dpi = 600, bg = "white")
+ggsave(tiff_path, final, width = 14, height = 8, dpi = 600, bg = "white",
        device = "tiff", compression = "lzw")
 cat("\u2713 PNG :", png_path,  "\n")
 cat("\u2713 TIFF:", tiff_path, "\n")

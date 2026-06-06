@@ -11,7 +11,7 @@ font_add("TeX Gyre Pagella",
          italic     = "/home/miguel/.fonts/texgyrepagella-italic.otf",
          bolditalic = "/home/miguel/.fonts/texgyrepagella-bolditalic.otf")
 showtext_auto()
-showtext_opts(dpi = 300)
+showtext_opts(dpi = 600)
 FONT <- "TeX Gyre Pagella"
 
 base    <- "/home/miguel/Abaum_Resistome_Network"
@@ -129,10 +129,10 @@ p <- ggplot(wl_long, aes(x = gene_f, y = country_f, fill = prev)) +
   # Heatmap tiles
   geom_tile(color = "white", linewidth = 0.30) +
 
-  # Prevalence labels (only >= 5%)
+  # Prevalence labels — only ≥5%, numbers only (no % symbol)
   geom_text(
-    aes(label = ifelse(!is.na(prev) & prev > 0,
-                       paste0(round(prev * 100), "%"), "")),
+    aes(label = ifelse(!is.na(prev) & prev >= 0.05,
+                       as.character(round(prev * 100)), "")),
     size     = 6.2, family = FONT,
     fontface = "bold", color = "#222222",
     show.legend = FALSE
@@ -144,8 +144,8 @@ p <- ggplot(wl_long, aes(x = gene_f, y = country_f, fill = prev)) +
     values   = rescale(c(0, 0.10, 0.30, 0.55, 0.75, 1.0)),
     limits   = c(0, 1),
     na.value = "#F0F0F0",
-    name     = "Prevalence",
-    labels   = percent_format(accuracy = 1),
+    name     = "Prevalence (%)",
+    labels   = c("0", "25", "50", "75", "100"),
     breaks   = c(0, 0.25, 0.50, 0.75, 1.0),
     guide    = guide_colorbar(
       barheight      = unit(5.5, "cm"),
@@ -161,12 +161,12 @@ p <- ggplot(wl_long, aes(x = gene_f, y = country_f, fill = prev)) +
     )
   ) +
 
-  # Gene class colour band at top (as annotation above plot)
+  # Gene class colour band at top — colours indicate resistance class (see legend)
   annotate("rect",
            xmin = seq_along(genes_present) - 0.46,
            xmax = seq_along(genes_present) + 0.46,
-           ymin = n_countries + 0.55,
-           ymax = n_countries + 0.95,
+           ymin = n_countries + 0.52,
+           ymax = n_countries + 0.92,
            fill = class_pal[gene_class[genes_present]],
            color = NA) +
 
@@ -183,31 +183,54 @@ p <- ggplot(wl_long, aes(x = gene_f, y = country_f, fill = prev)) +
            x     = n_genes + 1.20 + (n_df$n_genomes / max(n_df$n_genomes)) * 1.2 + 0.08,
            y     = as.numeric(n_df$country_f),
            label = format(n_df$n_genomes, big.mark = ","),
-           hjust = 0, size = 6.0, family = FONT,
+           hjust = 0, size = 6.5, family = FONT,
            color = "#666666", fontface = "italic") +
 
   # "Genomes" header above bar
   annotate("text",
-           x = n_genes + 2.20, y = n_countries + 1.35,
+           x = n_genes + 2.20, y = n_countries + 0.72,
            label = "Genomes", hjust = 0.5,
-           size = 6.5, family = FONT,
+           size = 7.0, family = FONT,
            fontface = "bold", color = "#444444") +
 
-  # Gene class labels — all at same height, no stagger needed
+  # Resistance class legend — top right, aligned with Prevalence colorbar top
+  # Single-line title at same height as "Prevalence (%)" — tight item spacing
   annotate("text",
-           x     = c(mean(which(gene_class[genes_present] == "Carbapenem")),
-                     mean(which(gene_class[genes_present] == "Colistin")),
-                     mean(which(gene_class[genes_present] == "Tetracycline"))),
-           y     = n_countries + 1.35,
-           label = c("Carbapenem", "Colistin", "Tetracycline"),
-           hjust = 0.5, size = 6.5, family = FONT,
-           fontface = "bold",
-           color = class_pal[c("Carbapenem","Colistin","Tetracycline")]) +
+           x = n_genes + 3.80, y = n_countries + 0.78,
+           label = "Resistance class:", hjust = 0, size = 6.5,
+           family = FONT, fontface = "bold", color = "#222222") +
+  # Carbapenem — aligned with top of colorbar bar (~100 label position)
+  annotate("rect",
+           xmin = n_genes + 3.80, xmax = n_genes + 4.25,
+           ymin = n_countries - 0.85, ymax = n_countries - 0.35,
+           fill = class_pal["Carbapenem"], color = NA) +
+  annotate("text",
+           x = n_genes + 4.40, y = n_countries - 0.60,
+           label = "Carbapenem", hjust = 0, size = 6.5,
+           family = FONT, color = class_pal["Carbapenem"], fontface = "bold") +
+  # Colistin
+  annotate("rect",
+           xmin = n_genes + 3.80, xmax = n_genes + 4.25,
+           ymin = n_countries - 2.05, ymax = n_countries - 1.55,
+           fill = class_pal["Colistin"], color = NA) +
+  annotate("text",
+           x = n_genes + 4.40, y = n_countries - 1.80,
+           label = "Colistin", hjust = 0, size = 6.5,
+           family = FONT, color = class_pal["Colistin"], fontface = "bold") +
+  # Tetracycline
+  annotate("rect",
+           xmin = n_genes + 3.80, xmax = n_genes + 4.25,
+           ymin = n_countries - 3.25, ymax = n_countries - 2.75,
+           fill = class_pal["Tetracycline"], color = NA) +
+  annotate("text",
+           x = n_genes + 4.40, y = n_countries - 3.00,
+           label = "Tetracycline", hjust = 0, size = 6.5,
+           family = FONT, color = class_pal["Tetracycline"], fontface = "bold") +
 
 
 
-  scale_x_discrete(expand = expansion(add = c(0.5, 2.8))) +
-  scale_y_discrete(expand = expansion(add = c(0.6, 1.8))) +
+  scale_x_discrete(expand = expansion(add = c(0.5, 7.5))) +
+  scale_y_discrete(expand = expansion(add = c(0.6, 1.2))) +
 
   coord_cartesian(clip = "off") +
 
@@ -223,17 +246,18 @@ p <- ggplot(wl_long, aes(x = gene_f, y = country_f, fill = prev)) +
     axis.title       = element_blank(),
     panel.grid       = element_blank(),
     legend.position  = "right",
-    legend.margin    = margin(l = 90),
+    legend.justification = "top",
+    legend.margin    = margin(l = 12, t = 0),
     plot.background  = element_rect(fill = "white", color = NA),
     panel.background = element_rect(fill = "white", color = NA),
-    plot.margin      = margin(t = 28, r = 60, b = 28, l = 12)
+    plot.margin      = margin(t = 28, r = 20, b = 28, l = 12)
   )
 
 # EXPORT
-png_s3  <- file.path(out_dir, "FigS3_geo_whitelist_heatmap.png")
-tiff_s3 <- file.path(out_dir, "FigS3_geo_whitelist_heatmap.tiff")
-ggsave(png_s3,  p, width = 20, height = 15, dpi = 300, bg = "white")
-ggsave(tiff_s3, p, width = 20, height = 15, dpi = 300, bg = "white",
+png_s3  <- file.path(out_dir, "FigS2_geo_whitelist_heatmap.png")
+tiff_s3 <- file.path(out_dir, "FigS2_geo_whitelist_heatmap.tiff")
+ggsave(png_s3,  p, width = 14, height = 15, dpi = 600, bg = "white")
+ggsave(tiff_s3, p, width = 14, height = 15, dpi = 600, bg = "white",
        device = "tiff", compression = "lzw")
 cat("\u2713 PNG :", png_s3,  "\n")
 cat("\u2713 TIFF:", tiff_s3, "\n")

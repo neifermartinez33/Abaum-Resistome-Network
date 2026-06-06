@@ -15,7 +15,7 @@ font_add("TeX Gyre Pagella",
          italic     = "/home/miguel/.fonts/texgyrepagella-italic.otf",
          bolditalic = "/home/miguel/.fonts/texgyrepagella-bolditalic.otf")
 showtext_auto()
-showtext_opts(dpi = 300)
+showtext_opts(dpi = 600)
 FONT <- "TeX Gyre Pagella"
 
 base    <- "/home/miguel/Abaum_Resistome_Network"
@@ -234,7 +234,7 @@ p <- ggraph(lay) +
   geom_node_text(
     aes(filter = (!is.na(node_num) & is_hub == 0),
         label  = node_num),
-    size        = 4.5,
+    size        = 5.0,
     fontface    = "bold",
     family      = FONT,
     color       = "#111111",
@@ -246,7 +246,7 @@ p <- ggraph(lay) +
   geom_node_text(
     aes(filter = (!is.na(node_num) & is_hub == 1),
         label  = node_num),
-    size        = 4.5,
+    size        = 5.0,
     fontface    = "bold",
     family      = FONT,
     color       = "#111111",
@@ -264,7 +264,7 @@ p <- ggraph(lay) +
            x        = iso_df$lx,
            y        = iso_df$ly,
            label    = iso_df$gene,
-           size     = 4.5,
+           size     = 5.0,
            fontface = "plain",
            family   = FONT,
            color    = "#555555",
@@ -278,13 +278,13 @@ p <- ggraph(lay) +
            shape = 21, size = 4.8, fill = "#777777",
            color = "white", stroke = 0.6) +
   annotate("text", x = lx0 + 0.18, y = ly0 - lsep,
-           label = "Gene", hjust = 0, size = 4.5,
+           label = "Gene", hjust = 0, size = 5.0,
            color = "#333333", family = FONT) +
   annotate("point", x = lx0 + 0.06, y = ly0 - 2*lsep,
            shape = 23, size = 5.5, fill = "#777777",
            color = "white", stroke = 0.5) +
   annotate("text", x = lx0 + 0.18, y = ly0 - 2*lsep,
-           label = "Hub", hjust = 0, size = 4.5,
+           label = "Hub", hjust = 0, size = 5.0,
            color = "#333333", family = FONT) +
 
   annotate("text", x = lx0, y = ly0 - 3.2*lsep,
@@ -294,31 +294,31 @@ p <- ggraph(lay) +
            shape = 21, size = 4.8, fill = comm_pal["C1"],
            color = "white", stroke = 0.5) +
   annotate("text", x = lx0 + 0.18, y = ly0 - 4.2*lsep,
-           label = comm_full["C1"], hjust = 0, size = 4.5,
+           label = comm_full["C1"], hjust = 0, size = 5.0,
            color = comm_pal["C1"], family = FONT) +
   annotate("point", x = lx0 + 0.06, y = ly0 - 5.2*lsep,
            shape = 21, size = 4.8, fill = comm_pal["C2"],
            color = "white", stroke = 0.5) +
   annotate("text", x = lx0 + 0.18, y = ly0 - 5.2*lsep,
-           label = comm_full["C2"], hjust = 0, size = 4.5,
+           label = comm_full["C2"], hjust = 0, size = 5.0,
            color = comm_pal["C2"], family = FONT) +
   annotate("point", x = lx0 + 0.06, y = ly0 - 6.2*lsep,
            shape = 21, size = 4.8, fill = comm_pal["C3"],
            color = "white", stroke = 0.5) +
   annotate("text", x = lx0 + 0.18, y = ly0 - 6.2*lsep,
-           label = comm_full["C3"], hjust = 0, size = 4.5,
+           label = comm_full["C3"], hjust = 0, size = 5.0,
            color = comm_pal["C3"], family = FONT) +
   annotate("point", x = lx0 + 0.06, y = ly0 - 7.2*lsep,
            shape = 21, size = 4.8, fill = comm_pal["C4"],
            color = "white", stroke = 0.5) +
   annotate("text", x = lx0 + 0.18, y = ly0 - 7.2*lsep,
-           label = comm_full["C4"], hjust = 0, size = 4.5,
+           label = comm_full["C4"], hjust = 0, size = 5.0,
            color = comm_pal["C4"], family = FONT) +
   annotate("point", x = lx0 + 0.06, y = ly0 - 8.2*lsep,
            shape = 21, size = 4.8, fill = comm_pal["C5"],
            color = "white", stroke = 0.5) +
   annotate("text", x = lx0 + 0.18, y = ly0 - 8.2*lsep,
-           label = comm_full["C5"], hjust = 0, size = 4.5,
+           label = comm_full["C5"], hjust = 0, size = 5.0,
            color = comm_pal["C5"], family = FONT) +
 
   # Jaccard gradient bar
@@ -339,13 +339,13 @@ p <- ggraph(lay) +
            ymax = ly0 - (10.5 + jacc_shift)*lsep,
            fill = NA, color = "#AAAAAA", linewidth = 0.3) +
   annotate("text", x = lx0,        y = ly0 - (11.7 + jacc_shift)*lsep,
-           label = "0.3",  hjust = 0.5, size = 4.5,
+           label = "0.3",  hjust = 0.5, size = 5.0,
            color = "#555555", family = FONT) +
   annotate("text", x = lx0 + 0.30, y = ly0 - (11.7 + jacc_shift)*lsep,
-           label = "0.65", hjust = 0.5, size = 4.5,
+           label = "0.65", hjust = 0.5, size = 5.0,
            color = "#555555", family = FONT) +
   annotate("text", x = lx0 + 0.59, y = ly0 - (11.7 + jacc_shift)*lsep,
-           label = "1.0",  hjust = 0.5, size = 4.5,
+           label = "1.0",  hjust = 0.5, size = 5.0,
            color = "#555555", family = FONT) +
 
   # GENE INDEX — 5 columns, fixed x positions, coloured by community
@@ -362,7 +362,7 @@ p <- ggraph(lay) +
              y        = y_pos,
              label    = paste0(num_genes$node_num, ". ", num_genes$gene),
              hjust    = 0,
-             size     = 4.5,
+             size     = 5.0,
              family   = FONT,
              color    = comm_pal[num_genes$comm_lab])
   } +
@@ -383,8 +383,8 @@ png_path  <- file.path(out_dir, "Fig1_consensus_network_communities.png")
 tiff_path <- file.path(out_dir, "Fig1_consensus_network_communities.tiff")
 
 # Save with zero padding: use ragg for clean transparent-border output
-ggsave(png_path,  p, width = 12, height = 13, dpi = 300, bg = "white")
-ggsave(tiff_path, p, width = 12, height = 13, dpi = 300, bg = "white",
+ggsave(png_path,  p, width = 12, height = 13, dpi = 600, bg = "white")
+ggsave(tiff_path, p, width = 12, height = 13, dpi = 600, bg = "white",
        device = "tiff", compression = "lzw")
 cat("\u2713 PNG :", png_path,  "\n")
 cat("\u2713 TIFF:", tiff_path, "\n")

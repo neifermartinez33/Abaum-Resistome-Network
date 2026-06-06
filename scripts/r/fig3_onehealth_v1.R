@@ -12,7 +12,7 @@ font_add("TeX Gyre Pagella",
          italic     = "/home/miguel/.fonts/texgyrepagella-italic.otf",
          bolditalic = "/home/miguel/.fonts/texgyrepagella-bolditalic.otf")
 showtext_auto()
-showtext_opts(dpi = 300)
+showtext_opts(dpi = 600)
 FONT <- "TeX Gyre Pagella"
 
 base    <- "/home/miguel/Abaum_Resistome_Network"
@@ -160,16 +160,16 @@ p_left <- ggplot(top20, aes(y = gene_f)) +
         label = paste0(round(human_prev * 100, 0), "%")),
     nudge_y  = 0.40,
     nudge_x  = 0.010,
-    size     = 6.2, family = FONT,
+    size     = 6.5, family = FONT,
     fontface = "bold", color = "#2166AC", hjust = 0
   ) +
 
   # Anotaciones de referencia
-  annotate("text", x = 0.103, y = 0.45, label = "10%",
-           size = 6.0, hjust = 0, family = FONT,
+  annotate("text", x = 0.103, y = 0.25, label = "10%",
+           size = 6.5, hjust = 0, family = FONT,
            color = "#BBBBBB", fontface = "italic") +
-  annotate("text", x = 0.503, y = 0.45, label = "50%",
-           size = 6.0, hjust = 0, family = FONT,
+  annotate("text", x = 0.503, y = 0.25, label = "50%",
+           size = 6.5, hjust = 0, family = FONT,
            color = "#CCCCCC", fontface = "italic") +
 
   # Leyenda manual (puntos de los 3 compartimentos)
@@ -181,7 +181,9 @@ p_left <- ggplot(top20, aes(y = gene_f)) +
     breaks = seq(0, 1.0, 0.25),
     expand = expansion(mult = c(0.01, 0.02))
   ) +
-  scale_y_discrete(expand = expansion(add = c(0.6, 2.2))) +
+  scale_y_discrete(expand = expansion(add = c(1.0, 2.2))) +
+
+  coord_cartesian(clip = "off") +
 
   labs(
     x = "Mean prevalence",
@@ -224,7 +226,7 @@ p_right <- ggplot(top20, aes(x = cs_scaled, y = gene_f, fill = res_class)) +
   geom_text(
     aes(label = sprintf("%.2f", convergence_score)),
     hjust    = -0.12,
-    size     = 6.2,
+    size     = 6.5,
     family   = FONT,
     fontface = "bold",
     color    = "#333333"
@@ -239,8 +241,8 @@ p_right <- ggplot(top20, aes(x = cs_scaled, y = gene_f, fill = res_class)) +
   ) +
   annotate("text",
            x = mean(top20$cs_scaled) + 0.02,
-           y = 0.45,
-           label = "mean", size = 6.0,
+           y = 0.25,
+           label = "mean", size = 6.5,
            family = FONT, color = "#AAAAAA", fontface = "italic", hjust = 0) +
 
   scale_fill_manual(
@@ -253,7 +255,7 @@ p_right <- ggplot(top20, aes(x = cs_scaled, y = gene_f, fill = res_class)) +
     labels = c("0", "0.5", "1.0"),
     expand = expansion(mult = c(0, 0.01))
   ) +
-  scale_y_discrete(expand = expansion(add = c(0.6, 2.2))) +
+  scale_y_discrete(expand = expansion(add = c(1.0, 2.2))) +
 
   labs(x = "Convergence score", y = NULL) +
 
@@ -294,8 +296,8 @@ final <- (p_left | p_right) +
 # EXPORT
 png_path  <- file.path(out_dir, "Fig3_one_health_convergence.png")
 tiff_path <- file.path(out_dir, "Fig3_one_health_convergence.tiff")
-ggsave(png_path,  final, width = 16, height = 10, dpi = 300, bg = "white")
-ggsave(tiff_path, final, width = 16, height = 10, dpi = 300, bg = "white",
+ggsave(png_path,  final, width = 16, height = 10, dpi = 600, bg = "white")
+ggsave(tiff_path, final, width = 16, height = 10, dpi = 600, bg = "white",
        device = "tiff", compression = "lzw")
 cat("\u2713 PNG :", png_path,  "\n")
 cat("\u2713 TIFF:", tiff_path, "\n")

@@ -11,7 +11,7 @@ font_add("TeX Gyre Pagella",
          italic     = "/home/miguel/.fonts/texgyrepagella-italic.otf",
          bolditalic = "/home/miguel/.fonts/texgyrepagella-bolditalic.otf")
 showtext_auto()
-showtext_opts(dpi = 300)
+showtext_opts(dpi = 600)
 FONT <- "TeX Gyre Pagella"
 
 base <- "/home/miguel/Abaum_Resistome_Network"
@@ -90,8 +90,8 @@ out_png  <- file.path(base,
 out_tiff <- file.path(base,
   "results/figures/supplementary/FigS5_regression_residuals.tiff")
 
-ggsave(out_png,  fig, width = 14, height = 9, dpi = 300, bg = "white")
-ggsave(out_tiff, fig, width = 14, height = 9, dpi = 300, bg = "white",
+ggsave(out_png,  fig, width = 14, height = 9, dpi = 600, bg = "white")
+ggsave(out_tiff, fig, width = 14, height = 9, dpi = 600, bg = "white",
        device = "tiff", compression = "lzw")
 cat("\u2713 PNG :", out_png,  "\n")
 cat("\u2713 TIFF:", out_tiff, "\n")
