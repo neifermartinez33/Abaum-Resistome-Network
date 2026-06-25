@@ -86,9 +86,9 @@ fig <- wrap_plots(plots, ncol = 3) &
   theme(plot.background = element_rect(fill = "white", color = NA))
 
 out_png  <- file.path(base,
-  "results/figures/supplementary/FigS5_regression_residuals.png")
+  "results/figures/supplementary/FigS4_regression_residuals.png")
 out_tiff <- file.path(base,
-  "results/figures/supplementary/FigS5_regression_residuals.tiff")
+  "results/figures/supplementary/FigS4_regression_residuals.tiff")
 
 ggsave(out_png,  fig, width = 14, height = 9, dpi = 600, bg = "white")
 ggsave(out_tiff, fig, width = 14, height = 9, dpi = 600, bg = "white",

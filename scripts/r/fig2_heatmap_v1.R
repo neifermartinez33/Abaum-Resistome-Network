@@ -230,8 +230,8 @@ p <- ggplot(wl_long, aes(x = gene_f, y = country_f, fill = prev)) +
   )
 
 # EXPORT
-png_s3  <- file.path(out_dir, "FigS2_geo_whitelist_heatmap.png")
-tiff_s3 <- file.path(out_dir, "FigS2_geo_whitelist_heatmap.tiff")
+png_s3  <- file.path(out_dir, "Fig2_temporal_trend_heatmap.png")
+tiff_s3 <- file.path(out_dir, "Fig2_temporal_trend_heatmap.tiff")
 ggsave(png_s3,  p, width = 14, height = 15, dpi = 600, bg = "white")
 ggsave(tiff_s3, p, width = 14, height = 15, dpi = 600, bg = "white",
        device = "tiff", compression = "lzw")
