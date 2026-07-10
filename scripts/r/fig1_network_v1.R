@@ -259,13 +259,13 @@ p <- ggraph(lay) +
            y     = iso_df$y,
            shape = 21, size = 4.5,
            fill  = "#AAAAAA", color = "white", stroke = 0.45) +
-  # Isolated node labels — grey text
+  # Isolated node labels — grey italic gene names
   annotate("text",
            x        = iso_df$lx,
            y        = iso_df$ly,
            label    = iso_df$gene,
            size     = 5.0,
-           fontface = "plain",
+           fontface = "italic",
            family   = FONT,
            color    = "#555555",
            hjust    = iso_df$hjust) +
@@ -348,7 +348,7 @@ p <- ggraph(lay) +
            label = "1.0",  hjust = 0.5, size = 5.0,
            color = "#555555", family = FONT) +
 
-  # GENE INDEX — 5 columns, fixed x positions, coloured by community
+  # GENE INDEX — numbers in plain text + gene names in italic
   annotate("text", x = -1.78, y = ix_y0 + 0.08,
            label = "Gene index", hjust = 0, fontface = "bold",
            size = 5.0, color = "#222222", family = FONT) +
@@ -360,10 +360,26 @@ p <- ggraph(lay) +
     annotate("text",
              x        = x_pos,
              y        = y_pos,
-             label    = paste0(num_genes$node_num, ". ", num_genes$gene),
+             label    = paste0(num_genes$node_num, "."),
              hjust    = 0,
              size     = 5.0,
              family   = FONT,
+             fontface = "plain",
+             color    = comm_pal[num_genes$comm_lab])
+  } +
+  {
+    col_idx <- ceiling(seq_len(n_total) / n_rows)   # 1..5
+    row_idx <- (seq_len(n_total) - 1) %% n_rows     # 0-based row
+    x_pos   <- ix_col_x[col_idx] + 0.075
+    y_pos   <- ix_y0 + ix_dy * row_idx
+    annotate("text",
+             x        = x_pos,
+             y        = y_pos,
+             label    = num_genes$gene,
+             hjust    = 0,
+             size     = 5.0,
+             family   = FONT,
+             fontface = "italic",
              color    = comm_pal[num_genes$comm_lab])
   } +
 
