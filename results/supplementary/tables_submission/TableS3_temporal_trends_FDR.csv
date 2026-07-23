@@ -1,42 +1,42 @@
 Gene,Resistance_class,Slope_per_year,R2,P_value,Q_value_BH,Sig_p005,Sig_q005,Trend,Note
-msr(e),Macrolide,0.025379,0.576,0.0001,0.0001,True,True,increasing,p < 0.0001
-arma,Aminoglycoside (16S methylase),0.024633,0.6331,0.0001,0.0001,True,True,increasing,p < 0.0001
-ftsi,Beta-lactam (PBP3),0.022347,0.8299,0.0001,0.0001,True,True,increasing,p < 0.0001
+msr(E),Macrolide,0.025379,0.576,0.0001,0.0001,True,True,increasing,p < 0.0001
+armA,Aminoglycoside (16S methylase),0.024633,0.6331,0.0001,0.0001,True,True,increasing,p < 0.0001
+ftsI,Beta-lactam (PBP3),0.022347,0.8299,0.0001,0.0001,True,True,increasing,p < 0.0001
 aac(3),Aminoglycoside,-0.018653,0.8303,0.0001,0.0001,True,True,decreasing,p < 0.0001
-qacedelta,Disinfectant (QAC),-0.015292,0.6001,0.0001,0.0001,True,True,decreasing,p < 0.0001
+qacEΔ1,Disinfectant (QAC),-0.015292,0.6001,0.0001,0.0001,True,True,decreasing,p < 0.0001
 ant(2''),Aminoglycoside,-0.016769,0.633,0.0001,0.0001,True,True,decreasing,p < 0.0001
 aph(3'),Aminoglycoside,-0.013278,0.667,0.0001,0.0001,True,True,decreasing,p < 0.0001
 sul,Sulfonamide,-0.013972,0.817,0.0001,0.0001,True,True,decreasing,p < 0.0001
-blandm,Carbapenem (MBL),0.004102,0.7623,0.0001,0.0001,True,True,increasing,p < 0.0001
-mph(e),Macrolide,0.024578,0.5525,0.0001,0.00041,True,True,increasing,p < 0.0001
-mert,Metal resistance,-0.004792,0.4948,0.0003,0.001025,True,True,decreasing,
-merr,Metal resistance,-0.004735,0.4917,0.0003,0.001025,True,True,decreasing,
-blaoxa_23like,Carbapenem (OXA-23),0.018513,0.4324,0.0009,0.002838,True,True,increasing,
-blatem,Beta-lactam (TEM),-0.007614,0.3741,0.0025,0.007321,True,True,decreasing,
-aada,Aminoglycoside,-0.010949,0.3684,0.0027,0.00738,True,True,decreasing,
+blaNDM,Carbapenem (MBL),0.004102,0.7623,0.0001,0.0001,True,True,increasing,p < 0.0001
+mph(E),Macrolide,0.024578,0.5525,0.0001,0.00041,True,True,increasing,p < 0.0001
+merT,Metal resistance,-0.004792,0.4948,0.0003,0.001025,True,True,decreasing,
+merR,Metal resistance,-0.004735,0.4917,0.0003,0.001025,True,True,decreasing,
+blaOXA-23-like,Carbapenem (OXA-23),0.018513,0.4324,0.0009,0.002838,True,True,increasing,
+blaTEM,Beta-lactam (TEM),-0.007614,0.3741,0.0025,0.007321,True,True,decreasing,
+aadA,Aminoglycoside,-0.010949,0.3684,0.0027,0.00738,True,True,decreasing,
 arr-2,Rifampicin,0.001419,0.2799,0.0113,0.028941,True,True,increasing,
-blaoxa_58like,Carbapenem (OXA-58),-0.003377,0.2765,0.012,0.028941,True,True,decreasing,
-adec,Efflux pump (AdeABC),-0.007687,0.2393,0.0209,0.047606,True,True,decreasing,
-pmrb,Colistin (pmrB),0.001347,0.2188,0.0281,0.060637,True,False,increasing,
-tet(b),Tetracycline,0.005835,0.2133,0.0305,0.062525,True,False,increasing,
-blaoxa_24like,Carbapenem (OXA-24),0.003631,0.1799,0.0491,0.095862,True,False,increasing,
+blaOXA-58-like,Carbapenem (OXA-58),-0.003377,0.2765,0.012,0.028941,True,True,decreasing,
+adeC,Efflux pump (AdeABC),-0.007687,0.2393,0.0209,0.047606,True,True,decreasing,
+pmrB,Colistin (pmrB),0.001347,0.2188,0.0281,0.060637,True,False,increasing,
+tet(B),Tetracycline,0.005835,0.2133,0.0305,0.062525,True,False,increasing,
+blaOXA-24-like,Carbapenem (OXA-24),0.003631,0.1799,0.0491,0.095862,True,False,increasing,
 aph(3''),Aminoglycoside,0.004947,0.1526,0.0723,0.134741,False,False,increasing,
-parc,Quinolone (QRDR),0.005817,0.1448,0.0807,0.143856,False,False,increasing,
-blaoxa_235like,Carbapenem (OXA-235),0.000832,0.1172,0.1189,0.203121,False,False,increasing,
-tet(x5),Tetracycline (Tet-X5),0.000119,0.1023,0.1468,0.240752,False,False,increasing,
+parC,Quinolone (QRDR),0.005817,0.1448,0.0807,0.143856,False,False,increasing,
+blaOXA-235-like,Carbapenem (OXA-235),0.000832,0.1172,0.1189,0.203121,False,False,increasing,
+tet(X5),Tetracycline (Tet-X5),0.000119,0.1023,0.1468,0.240752,False,False,increasing,
 aac(6'),Aminoglycoside,0.005719,0.0834,0.1923,0.291383,False,False,increasing,
 arr-3,Rifampicin,0.000151,0.0823,0.1955,0.291383,False,False,increasing,
 aph(6),Aminoglycoside,0.003316,0.0787,0.206,0.291383,False,False,increasing,
-blavim,Carbapenem (MBL),2.6e-05,0.0787,0.2061,0.291383,False,False,increasing,
-tet(x3),Tetracycline (Tet-X3),0.000141,0.0752,0.2167,0.296157,False,False,increasing,
+blaVIM,Carbapenem (MBL),0.000026,0.0787,0.2061,0.291383,False,False,increasing,
+tet(X3),Tetracycline (Tet-X3),0.000141,0.0752,0.2167,0.296157,False,False,increasing,
 mcr-4.3,Colistin,0.000153,0.0574,0.283,0.37429,False,False,increasing,
-catb,Phenicol,0.003998,0.0484,0.3254,0.416919,False,False,increasing,
-gyra,Quinolone (QRDR),-0.002778,0.0427,0.3561,0.442427,False,False,decreasing,
-blakpc,Carbapenem,-2.8e-05,0.0082,0.6885,0.824217,False,False,decreasing,
-arr,Rifampicin,2e-06,0.0074,0.7036,0.824217,False,False,increasing,
-blaoxa_143like,Carbapenem (OXA-143),-0.000139,0.006,0.7319,0.833553,False,False,decreasing,
-abaf,Fosfomycin,0.000246,0.0048,0.7591,0.841165,False,False,increasing,
-dfra,Trimethoprim,-0.000231,0.0016,0.8597,0.908308,False,False,decreasing,
-rpob,Rifampicin,2.2e-05,0.0015,0.864,0.908308,False,False,increasing,
-blaimp,Carbapenem,-4e-06,0.0003,0.9406,0.964115,False,False,decreasing,
-mcr-4.7,Colistin,0.0,0.0,1.0,1.0,False,False,no trend (zero prevalence),
+catB,Phenicol,0.003998,0.0484,0.3254,0.416919,False,False,increasing,
+gyrA,Quinolone (QRDR),-0.002778,0.0427,0.3561,0.442427,False,False,decreasing,
+blaKPC,Carbapenem,-0.000028,0.0082,0.6885,0.824217,False,False,decreasing,
+arr,Rifampicin,0.000002,0.0074,0.7036,0.824217,False,False,increasing,
+blaOXA-143-like,Carbapenem (OXA-143),-0.000139,0.006,0.7319,0.833553,False,False,decreasing,
+abaF,Fosfomycin,0.000246,0.0048,0.7591,0.841165,False,False,increasing,
+dfrA,Trimethoprim,-0.000231,0.0016,0.8597,0.908308,False,False,decreasing,
+rpoB,Rifampicin,0.000022,0.0015,0.864,0.908308,False,False,increasing,
+blaIMP,Carbapenem,-0.000004,0.0003,0.9406,0.964115,False,False,decreasing,
+mcr-4.7,Colistin,0,0,1,1,False,False,no trend (zero prevalence),

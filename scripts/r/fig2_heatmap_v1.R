@@ -2,6 +2,7 @@ suppressPackageStartupMessages({
   library(data.table)
   library(ggplot2)
   library(scales)
+  library(patchwork)
   library(showtext)
 })
 
@@ -14,226 +15,199 @@ showtext_auto()
 showtext_opts(dpi = 600)
 FONT <- "TeX Gyre Pagella"
 
+# RUTAS
 base    <- "/home/miguel/Abaum_Resistome_Network"
-sup_dir <- file.path(base, "results/supplementary")
-out_dir <- file.path(base, "results/figures/supplementary")
+tables  <- file.path(base, "results/tables")
+out_dir <- file.path(base, "results/figures/main")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
-# DATA
-wl   <- fread(file.path(base, "results/supplementary/tables_submission/TableS7_whitelist_genes_by_country.csv"))
-prev <- fread(file.path(base, "results/supplementary/tables_submission/TableS6_geo_ARG_burden_by_country.csv"))
+trends  <- fread(file.path(base, "results/supplementary/tables_submission/TableS3_temporal_trends_FDR.csv"))
+prev_yr <- fread(file.path(tables, "temporal_prevalence_by_year.csv"))
 
-wl <- wl[!country_norm %in% c("not applicable", "missing", "NA")]
-wl <- wl[!is.na(country_norm)]
-wl <- wl[total_wl > 0]
-wl <- merge(wl, prev[, .(country_norm, n_genomes)],
-            by = "country_norm", all.x = TRUE)
-wl <- wl[!is.na(n_genomes) & n_genomes >= 30]
+# FILTRO TEMPORAL
+prev_yr <- prev_yr[year >= 2006 & year <= 2023]
 
-# GENES
-wl_genes <- c("blandm","blaoxa_23like","blaoxa_24like","blaoxa_58like",
-              "blaoxa_143like","blaoxa_235like","blaimp","blakpc",
-              "blavim","mcr-4.3","mcr-4.7","pmrb","tet(x3)","tet(x5)")
+# GENES SIGNIFICATIVOS p < 0.05
+# FDR-confirmed genes only (Sig_q005 = TRUE)
+sig_inc_fdr <- trends[Sig_q005 == TRUE & Trend == "increasing"][order(-Slope_per_year), Gene]
+sig_dec_fdr <- trends[Sig_q005 == TRUE & Trend == "decreasing"][order(Slope_per_year),  Gene]
+# Borderline genes: nominally significant (p<0.05) but NOT FDR confirmed
+sig_borderline <- trends[Sig_p005 == TRUE & Sig_q005 == FALSE, Gene]
 
-wl_prev <- copy(wl)
-setnames(wl_prev, "tet(x3)", "tet_x3")
-setnames(wl_prev, "tet(x5)", "tet_x5")
-wl_genes <- gsub("tet\\(x3\\)", "tet_x3", wl_genes)
-wl_genes <- gsub("tet\\(x5\\)", "tet_x5", wl_genes)
+sig_inc <- sig_inc_fdr
+sig_dec <- sig_dec_fdr
 
-gene_labels <- c(
-  "blandm"        = "blaNDM",
-  "blaoxa_23like" = "blaOXA-23",
-  "blaoxa_24like" = "blaOXA-24",
-  "blaoxa_58like" = "blaOXA-58",
-  "blaoxa_143like"= "blaOXA-143",
-  "blaoxa_235like"= "blaOXA-235",
-  "blaimp"        = "blaIMP",
-  "blakpc"        = "blaKPC",
-  "blavim"        = "blaVIM",
-  "mcr-4.3"       = "mcr-4.3",
-  "mcr-4.7"       = "mcr-4.7",
-  "tet_x3"        = "tet(X3)",
-  "tet_x5"        = "tet(X5)",
-  "pmrb"          = "pmrB"
+# Gene order: decreasing (bottom) | borderline (above dec, no bar) | increasing (top)
+# Place borderline ABOVE increasing, ungrouped
+
+gene_order <- c(sig_dec, sig_inc, sig_borderline)   # dec=bottom, inc=middle, borderline=top
+gcols      <- intersect(gene_order, colnames(prev_yr))
+gcols_inc        <- intersect(sig_inc, gcols)
+gcols_dec        <- intersect(sig_dec, gcols)
+gcols_borderline <- intersect(sig_borderline, gcols)
+n_inc        <- length(gcols_inc)
+n_dec        <- length(gcols_dec)
+n_borderline <- length(gcols_borderline)
+n_tot        <- length(gcols)
+
+# PREVALENCIA MEDIA POR GEN
+prev_mean <- prev_yr[, lapply(.SD, mean, na.rm = TRUE),
+                     .SDcols = gcols]
+prev_mean_long <- data.table(
+  gene     = gcols,
+  mean_prev = as.numeric(prev_mean[1, ])
 )
 
-# Gene class for header colour bands
-gene_class <- c(
-  "blandm"        = "Carbapenem",
-  "blaoxa_23like" = "Carbapenem",
-  "blaoxa_24like" = "Carbapenem",
-  "blaoxa_58like" = "Carbapenem",
-  "blaoxa_143like"= "Carbapenem",
-  "blaoxa_235like"= "Carbapenem",
-  "blaimp"        = "Carbapenem",
-  "blakpc"        = "Carbapenem",
-  "blavim"        = "Carbapenem",
-  "mcr-4.3"       = "Colistin",
-  "mcr-4.7"       = "Colistin",
-  "pmrb"          = "Colistin",
-  "tet_x3"        = "Tetracycline",
-  "tet_x5"        = "Tetracycline"
+# GENES ROBUSTOS: R² ≥ 0.60 AND prevalencia media ≥ 10%
+robust_genes <- trends[Sig_p005 == TRUE & R2 >= 0.60, Gene]
+robust_genes <- intersect(robust_genes, gcols)
+robust_in    <- prev_mean_long[gene %in% robust_genes &
+                                 mean_prev >= 0.10, gene]
+
+# CLASE DE RESISTENCIA
+res_class <- c(
+  "msr(E)"        = "Macrolide",
+  "armA"          = "Aminoglycoside",
+  "mph(E)"        = "Macrolide",
+  "ftsI"          = "Beta-lactam",
+  "blaOXA-23-like" = "Carbapenem",
+  "tet(B)"        = "Tetracycline",
+  "blaNDM"        = "Carbapenem",
+  "blaOXA-24-like" = "Carbapenem",
+  "arr-2"         = "Rifampicin",
+  "pmrB"          = "Colistin",
+  "aac(3)"        = "Aminoglycoside",
+  "ant(2'')"      = "Aminoglycoside",
+  "qacEΔ1"     = "Disinfectant",
+  "sul"           = "Sulfonamide",
+  "aph(3')"       = "Aminoglycoside",
+  "aadA"          = "Aminoglycoside",
+  "adeC"          = "Efflux",
+  "blaTEM"        = "Beta-lactam",
+  "merT"          = "Metal",
+  "merR"          = "Metal",
+  "blaOXA-58-like" = "Carbapenem"
 )
 
-class_pal <- c(
-  "Carbapenem"  = "#7B2FBE",
-  "Colistin"    = "#882255",
-  "Tetracycline"= "#8B6914"
+# FORMATO LARGO
+prev_long <- melt(
+  prev_yr[, c("year", gcols), with = FALSE],
+  id.vars       = "year",
+  variable.name = "gene",
+  value.name    = "prev"
+)
+prev_long[, gene    := factor(gene, levels = gene_order)]
+prev_long[, pct     := round(prev * 100, 0)]
+prev_long[, lab     := ifelse(prev > 0, paste0(pct, "%"), "")]
+prev_long[, txt_col := ifelse(prev >= 0.52, "white", "#1a1a1a")]
+
+# Etiquetas eje Y: ★ solo en genes con R² ≥ 0.60 y prevalencia ≥ 10%
+gene_labels <- setNames(
+  ifelse(gene_order %in% robust_in,
+         paste0(gene_order, "  *"),
+         gene_order),
+  gene_order
 )
 
-# Calculate prevalence
-for (g in wl_genes) {
-  if (g %in% colnames(wl_prev))
-    set(wl_prev, j = g, value = wl_prev[[g]] / wl_prev$n_genomes)
-}
+# POSICIONES
+y_dec_center <- n_dec / 2 + 0.5
+y_inc_center <- n_dec + n_inc / 2 + 0.5
+years_available <- sort(unique(prev_long$year))
+x_min <- min(years_available)
+x_max <- max(years_available)
 
-# Sort countries by total WHO gene prevalence (descending)
-wl_prev[, total_prev := 0]
-for (g in wl_genes) {
-  if (g %in% colnames(wl_prev)) {
-    vals <- wl_prev[[g]]; vals[is.na(vals)] <- 0
-    wl_prev[, total_prev := total_prev + vals]
-  }
-}
-wl_prev <- wl_prev[order(-total_prev)]
-wl_prev[, country_f := factor(country_norm, levels = rev(country_norm))]
+# PALETA
+pal_colors <- c(
+  "#FFFEF5", "#FFF7BC", "#FEC44F",
+  "#FE9929", "#EC7014", "#CC4C02", "#8C2D04"
+)
+pal_values <- rescale(c(0, 0.10, 0.30, 0.50, 0.65, 0.80, 1.0))
 
-# Long format
-wl_long <- rbindlist(lapply(wl_genes, function(g) {
-  if (!g %in% colnames(wl_prev)) return(NULL)
-  data.table(country_f = wl_prev$country_f,
-             gene = g, prev = wl_prev[[g]])
-}))
-wl_long[is.na(prev) | prev == 0, prev := NA]
+# HEATMAP
+p_heat <- ggplot(prev_long, aes(x = year, y = gene, fill = prev)) +
 
-genes_present <- wl_genes[wl_genes %in% unique(wl_long$gene)]
-wl_long[, gene_f := factor(gene,
-                            levels = genes_present,
-                            labels = gene_labels[genes_present])]
+  # Franja Increasing — solo genes FDR confirmados (Sig_q005 = TRUE)
+  annotate("rect",
+           xmin = x_min - 1.62, xmax = x_min - 0.92,
+           ymin = n_dec + 0.5, ymax = n_dec + n_inc + 0.5,
+           fill = "#CC4C02", color = NA, alpha = 0.90) +
+  annotate("text",
+           x = x_min - 1.27, y = n_dec + n_inc / 2 + 0.5,
+           label = "Increasing \u2191",
+           angle = 90, hjust = 0.5, size = 6.2,
+           fontface = "bold", family = FONT, color = "white") +
 
-# n_genomes for right-side bar
-n_df <- wl_prev[, .(country_f, n_genomes, total_prev)]
+  # Franja Decreasing
+  annotate("rect",
+           xmin = x_min - 1.62, xmax = x_min - 0.92,
+           ymin = 0.5, ymax = n_dec + 0.5,
+           fill = "#1B4F72", color = NA, alpha = 0.90) +
+  annotate("text",
+           x = x_min - 1.27, y = y_dec_center,
+           label = "Decreasing \u2193",
+           angle = 90, hjust = 0.5, size = 6.2,
+           fontface = "bold", family = FONT, color = "white") +
 
-# Gene detection frequency for top bar
-gene_freq <- wl_long[!is.na(prev), .N, by = gene_f]
-gene_freq[, pct := N / nrow(wl_prev)]
+  # Separador horizontal (solo en el área del heatmap, no sobre la barra lateral)
+  annotate("rect",
+           xmin = x_min - 0.5, xmax = x_max + 0.52,
+           ymin = n_dec + 0.485, ymax = n_dec + 0.515,
+           fill = "#222222", color = NA) +
 
-# Number of countries
-n_countries <- nlevels(wl_long$country_f)
-n_genes     <- length(genes_present)
+  # Celdas
+  geom_tile(color = "white", linewidth = 0.28) +
 
-# FIGURE
-p <- ggplot(wl_long, aes(x = gene_f, y = country_f, fill = prev)) +
+  # Porcentajes
+  geom_text(aes(label = lab, color = txt_col),
+            size = 6.2, family = FONT, show.legend = FALSE) +
+  scale_color_identity() +
 
-  # Heatmap tiles
-  geom_tile(color = "white", linewidth = 0.30) +
-
-  # Prevalence labels — only ≥5% to reduce crowding in dense rows
-  geom_text(
-    aes(label = ifelse(!is.na(prev) & prev >= 0.05,
-                       paste0(round(prev * 100), "%"), "")),
-    size     = 6.2, family = FONT,
-    fontface = "bold", color = "#222222",
-    show.legend = FALSE
-  ) +
-
-  # Colour scale
   scale_fill_gradientn(
-    colors   = c("#FFFEF0","#FEC44F","#FE9929","#EC7014","#CC4C02","#8C2D04"),
-    values   = rescale(c(0, 0.10, 0.30, 0.55, 0.75, 1.0)),
-    limits   = c(0, 1),
-    na.value = "#F0F0F0",
-    name     = "Prevalence",
-    labels   = percent_format(accuracy = 1),
-    breaks   = c(0, 0.25, 0.50, 0.75, 1.0),
-    guide    = guide_colorbar(
-      barheight      = unit(5.5, "cm"),
-      barwidth       = unit(0.50, "cm"),
-      title.position = "top",
-      title.hjust    = 0.5,
-      ticks.colour   = "grey50",
-      frame.colour   = "grey60",
-      title.theme    = element_text(size = 19.0, face = "bold",
-                                    family = FONT, color = "#222222"),
-      label.theme    = element_text(size = 17.5, family = FONT,
-                                    color = "#444444")
+    colors = pal_colors, values = pal_values,
+    limits = c(0, 1), name = "Prevalence",
+    labels = percent_format(accuracy = 1),
+    breaks = c(0, 0.25, 0.50, 0.75, 1.0),
+    guide  = guide_colorbar(
+      barheight = unit(5.0, "cm"), barwidth = unit(0.42, "cm"),
+      ticks.colour = "grey50", frame.colour = "grey60",
+      title.position = "top", title.hjust = 0.5
     )
   ) +
 
-  # Gene class colour band at top (as annotation above plot)
-  annotate("rect",
-           xmin = seq_along(genes_present) - 0.46,
-           xmax = seq_along(genes_present) + 0.46,
-           ymin = n_countries + 0.55,
-           ymax = n_countries + 0.95,
-           fill = class_pal[gene_class[genes_present]],
-           color = NA) +
-
-  # n_genomes bar at right side (as annotation)
-  annotate("rect",
-           xmin = n_genes + 1.20,
-           xmax = n_genes + 1.20 + (n_df$n_genomes / max(n_df$n_genomes)) * 1.2,
-           ymin = as.numeric(n_df$country_f) - 0.40,
-           ymax = as.numeric(n_df$country_f) + 0.40,
-           fill = "#AAAAAA", color = NA, alpha = 0.7) +
-
-  # n_genomes labels
-  annotate("text",
-           x     = n_genes + 1.20 + (n_df$n_genomes / max(n_df$n_genomes)) * 1.2 + 0.08,
-           y     = as.numeric(n_df$country_f),
-           label = format(n_df$n_genomes, big.mark = ","),
-           hjust = 0, size = 6.5, family = FONT,
-           color = "#666666", fontface = "italic") +
-
-  # "Genomes" header above bar
-  annotate("text",
-           x = n_genes + 2.20, y = n_countries + 1.35,
-           label = "Genomes", hjust = 0.5,
-           size = 7.0, family = FONT,
-           fontface = "bold", color = "#444444") +
-
-  # Gene class labels — all at same height, no stagger needed
-  annotate("text",
-           x     = c(mean(which(gene_class[genes_present] == "Carbapenem")),
-                     mean(which(gene_class[genes_present] == "Colistin")),
-                     mean(which(gene_class[genes_present] == "Tetracycline"))),
-           y     = n_countries + 1.35,
-           label = c("Carbapenem", "Colistin", "Tetracycline"),
-           hjust = 0.5, size = 7.0, family = FONT,
-           fontface = "bold",
-           color = class_pal[c("Carbapenem","Colistin","Tetracycline")]) +
-
-
-
-  scale_x_discrete(expand = expansion(add = c(0.5, 2.8))) +
-  scale_y_discrete(expand = expansion(add = c(0.6, 1.8))) +
+  scale_x_continuous(
+    breaks = years_available,
+    expand = expansion(mult = c(0.01, 0.01))
+  ) +
+  scale_y_discrete(
+    labels = gene_labels,
+    expand = expansion(add = c(0.4, 0.4))
+  ) +
 
   coord_cartesian(clip = "off") +
-
-  labs(x = NULL, y = NULL) +
-
   theme_minimal(base_size = 22, base_family = FONT) +
   theme(
-    axis.text.x      = element_text(size = 19.0, angle = 45, hjust = 1,
-                                    face = "italic", family = FONT,
-                                    color = "#222222"),
-    axis.text.y      = element_text(size = 19.0, family = FONT,
-                                    color = "#222222"),
-    axis.title       = element_blank(),
+    axis.text.x      = element_text(angle = 45, hjust = 1,
+                                    size = 18.0, color = "#333333", family = FONT),
+    axis.text.y      = element_text(size = 18.0, color = "#111111",
+                                    face = "italic", family = FONT),
+    axis.title.x     = element_text(size = 17.5, family = FONT, margin = margin(t = 6)),
+    axis.title.y     = element_blank(),
     panel.grid       = element_blank(),
     legend.position  = "right",
-    legend.margin    = margin(l = 90),
+    legend.title     = element_text(size = 19.0, face = "bold", family = FONT),
+    legend.text      = element_text(size = 17.5, family = FONT),
     plot.background  = element_rect(fill = "white", color = NA),
     panel.background = element_rect(fill = "white", color = NA),
-    plot.margin      = margin(t = 28, r = 60, b = 28, l = 12)
-  )
+    plot.margin      = margin(t = 10, r = 4, b = 10, l = 55)
+  ) +
+  labs(x = "Collection year", y = NULL)
 
-# EXPORT
-png_s3  <- file.path(out_dir, "Fig2_temporal_trend_heatmap.png")
-tiff_s3 <- file.path(out_dir, "Fig2_temporal_trend_heatmap.tiff")
-ggsave(png_s3,  p, width = 14, height = 15, dpi = 600, bg = "white")
-ggsave(tiff_s3, p, width = 14, height = 15, dpi = 600, bg = "white",
+# EXPORTAR
+# EXPORTAR PNG + TIFF
+png_path  <- file.path(out_dir, "Fig2_temporal_trend_heatmap.png")
+tiff_path <- file.path(out_dir, "Fig2_temporal_trend_heatmap.tiff")
+ggsave(png_path,  p_heat, width = 14, height = 10, dpi = 600, bg = "white")
+ggsave(tiff_path, p_heat, width = 14, height = 10, dpi = 600, bg = "white",
        device = "tiff", compression = "lzw")
-cat("\u2713 PNG :", png_s3,  "\n")
-cat("\u2713 TIFF:", tiff_s3, "\n")
+cat("\u2713 PNG :", png_path,  "\n")
+cat("\u2713 TIFF:", tiff_path, "\n")

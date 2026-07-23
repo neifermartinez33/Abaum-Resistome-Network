@@ -45,17 +45,17 @@ nodes[, comm_lab := fcase(
 # numbered 23-26 in the reference → they are NOT in this list.
 # blakpc is an isolated grey node → in this list (gets no number, grey label).
 who_genes <- c(
-  "blakpc",          # isolated, grey, left-middle
-  "blaoxa_143like",  # isolated, grey, left-middle
-  "blavim",          # isolated, grey, left-low
+  "blaKPC",          # isolated, grey, left-middle
+  "blaOXA-143-like",  # isolated, grey, left-middle
+  "blaVIM",          # isolated, grey, left-low
   "mcr-4.3",         # isolated, grey, bottom-left
   "mcr-4.7",         # isolated, grey, bottom-center
-  "tet(x3)",         # isolated, grey, right-top
-  "tet(x5)",         # isolated, grey, top-right
-  "pmrb",            # isolated, grey, right-mid
-  "rpob",            # isolated, grey, right-mid
-  "merr",            # isolated, grey, bottom-right
-  "mert",            # isolated, grey, right-low
+  "tet(X3)",         # isolated, grey, right-top
+  "tet(X5)",         # isolated, grey, top-right
+  "pmrB",            # isolated, grey, right-mid
+  "rpoP",            # isolated, grey, right-mid
+  "merR",            # isolated, grey, bottom-right
+  "merT",            # isolated, grey, right-low
   "arr",             # isolated, grey, top-center
   "arr-3"            # isolated, grey, top-left-center
 )
@@ -113,17 +113,17 @@ lay <- create_layout(g, layout = "manual",
 iso_positions <- list(
   "arr"            = c( 0.10,  1.08),
   "arr-3"          = c(-0.38,  1.00),
-  "tet(x5)"        = c( 0.72,  1.05),
-  "tet(x3)"        = c( 1.10,  0.60),
-  "rpob"           = c( 1.18,  0.18),
-  "pmrb"           = c( 1.18, -0.20),
-  "mert"           = c( 1.10, -0.52),
-  "merr"           = c( 0.78, -0.88),
+  "tet(X5)"        = c( 0.72,  1.05),
+  "tet(X3)"        = c( 1.10,  0.60),
+  "rpoB"           = c( 1.18,  0.18),
+  "pmrB"           = c( 1.18, -0.20),
+  "merT"           = c( 1.10, -0.52),
+  "merR"           = c( 0.78, -0.88),
   "mcr-4.7"        = c( 0.18, -1.05),
   "mcr-4.3"        = c(-0.42, -0.95),
-  "blavim"         = c(-0.90, -0.62),
-  "blaoxa_143like" = c(-1.05, -0.10),
-  "blakpc"         = c(-1.00,  0.28)
+  "blaVIM"         = c(-0.90, -0.62),
+  "blaOXA-143-like" = c(-1.05, -0.10),
+  "blaKPC"         = c(-1.00,  0.28)
 )
 
 # Build iso data frame in the order of isolated_v
